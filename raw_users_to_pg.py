@@ -20,10 +20,13 @@ logger = logging.getLogger(__name__)
 
 
 def add_new_user() -> None:
-    """  
-    Создает нового пользователя и добавляет в базу данных.  
-    Генерирует случайные данные пользователя при помощи библиотеки Faker    и добавляет запись в таблицу raw.raw_users в PostgreSQL.  
-    :return: None  
+    """
+    Создает нового пользователя и добавляет в базу данных.
+
+    Генерирует случайные данные пользователя при помощи библиотеки Faker
+    и добавляет запись в таблицу raw.raw_users в PostgreSQL.
+
+    :return: None
     """
     list_of_dict = []
     first_date = fake.date_time_ad(
@@ -63,14 +66,16 @@ def add_new_user() -> None:
 
 
 def update_info_about_current_user() -> None:
-    """  
-    Обновляет информацию о случайном пользователе, реализуя CDC-подобную логику.  
-    Выбирает случайного пользователя из базы данных, модифицирует одно или несколько полей и добавляет новую запись с
-    тем же ID, но обновленными данными.    Поле updated_at устанавливается в текущую дату и время.
-    Для обновления значений полей используется библиотека Faker.
-    :return: None  
     """
+    Обновляет информацию о случайном пользователе, реализуя CDC-подобную логику.
 
+    Выбирает случайного пользователя из базы данных, модифицирует одно или
+    несколько полей и добавляет новую запись с тем же ID, но обновленными данными.
+    Поле updated_at устанавливается в текущую дату и время. Для обновления значений
+    полей используется библиотека Faker.
+
+    :return: None
+    """
     # Подключение к базе данных
     db_url = "postgresql://postgres:postgres@localhost:5432/postgres"
     engine = create_engine(db_url)
@@ -81,7 +86,7 @@ def update_info_about_current_user() -> None:
             result = conn.execute(text("SELECT * FROM raw.raw_users ORDER BY random() LIMIT 1"))
             user = result.mappings().one()
 
-            # Определение полей для обновления
+        # Определение полей для обновления
         fields_to_update = ["first_name", "last_name", "middle_name", "birthday", "email"]
 
         # Случайно выбираем количество полей для обновления (от 1 до 5)
@@ -114,7 +119,7 @@ def update_info_about_current_user() -> None:
                 new_user_data[field] = fake.email()
                 changes[field] = f"{user[field]} -> {new_user_data[field]}"
 
-                # Обновляем поле updated_at
+        # Обновляем поле updated_at
         new_user_data["updated_at"] = datetime.datetime.now(tz=datetime.UTC)
 
         # Обновляем поле ts_db

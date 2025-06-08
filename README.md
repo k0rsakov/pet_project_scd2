@@ -77,9 +77,6 @@ docker-compose up -d
 ## Ссылки
 
 - [Лучший пет-проект для дата-инженера (The best pet-project for a data-engineer)](https://youtu.be/MQPHgUQvKnI)
-- [Описание работы API](https://earthquake.usgs.gov/fdsnws/event/1/#methods)
-- [Описание полей из API](https://earthquake.usgs.gov/data/comcat/index.php)
-- [airflow docker-compose](https://airflow.apache.org/docs/apache-airflow/2.10.5/docker-compose.yaml)
 
 ## Notes
 
